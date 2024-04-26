@@ -3,8 +3,11 @@ import type { Socket } from "socket.io";
 class EventHandler {
   private eventName: string;
   private handler: (socket: Socket, ...args: any) => void;
-  constructor(eventName: string, handler: (socket: Socket, ...args: any) => void) {
-    this.eventName = 'event:' + eventName;
+  constructor(
+    eventName: string,
+    handler: (socket: Socket, ...args: any) => void,
+  ) {
+    this.eventName = "event:" + eventName;
     this.handler = handler;
   }
 

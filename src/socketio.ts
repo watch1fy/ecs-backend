@@ -5,16 +5,16 @@ export const httpServer = createServer();
 
 const ioServer = new Server({
   cors: {
-    allowedHeaders: '*',
+    allowedHeaders: "*",
     origin: [
       process.env.FRONT_END_DOMAIN as string,
-      'https://admin.socket.io',
-      "http://192.168.29.242:3000"
+      "https://admin.socket.io",
+      "http://192.168.29.242:3000",
     ],
-    credentials: true
-  }
+    credentials: true,
+  },
 });
 
-ioServer.attach(httpServer)
+ioServer.attach(httpServer);
 
 export default ioServer;

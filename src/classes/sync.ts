@@ -6,17 +6,17 @@ class SyncNamespace extends SocketNamespace {
   private _syncNsp: Namespace;
   private static _instance: SyncNamespace | null = null;
   private _handlers: EventHandler[];
-  private CONNECTION: string = 'connection' as const;
+  private CONNECTION: string = "connection" as const;
 
   constructor(io: Server) {
     super();
 
     if (SyncNamespace._instance) {
-      throw new Error('SyncNamespace can only be instantiated once.')
+      throw new Error("SyncNamespace can only be instantiated once.");
     }
     SyncNamespace._instance = this;
-    this._syncNsp = io.of('/sync');
-    this._handlers = []
+    this._syncNsp = io.of("/sync");
+    this._handlers = [];
   }
 
   get instance() {
@@ -31,8 +31,8 @@ class SyncNamespace extends SocketNamespace {
     this._syncNsp.on(this.CONNECTION, (socket: Socket) => {
       this._handlers.forEach((handler: EventHandler) => {
         handler.handle(socket);
-      })
-    })
+      });
+    });
   }
 }
 

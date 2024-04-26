@@ -6,17 +6,17 @@ class ChatNamespace extends SocketNamespace {
   private _syncNsp: Namespace;
   private static _instance: ChatNamespace | null = null;
   private _handlers: EventHandler[];
-  private CONNECTION: string = 'connection' as const;
+  private CONNECTION: string = "connection" as const;
 
   constructor(io: Server) {
     super();
 
     if (ChatNamespace._instance) {
-      throw new Error('ChatNamespace can only be instantiated once.')
+      throw new Error("ChatNamespace can only be instantiated once.");
     }
     ChatNamespace._instance = this;
-    this._syncNsp = io.of('/sync');
-    this._handlers = []
+    this._syncNsp = io.of("/sync");
+    this._handlers = [];
   }
 
   get instance() {
@@ -31,8 +31,8 @@ class ChatNamespace extends SocketNamespace {
     this._syncNsp.on(this.CONNECTION, (socket: Socket) => {
       this._handlers.forEach((handler: EventHandler) => {
         handler.handle(socket);
-      })
-    })
+      });
+    });
   }
 }
 

@@ -2,8 +2,12 @@
   "name": "sync-service",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "tidy": "bunx prettier --write ."
+  },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "prettier": "^3.2.5"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"

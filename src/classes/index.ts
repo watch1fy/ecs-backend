@@ -3,9 +3,4 @@ import SocketNamespace from "./socket";
 import SyncNamespace from "./sync";
 import ChatNamespace from "./chat";
 
-export {
-  EventHandler,
-  SocketNamespace,
-  SyncNamespace,
-  ChatNamespace
-}
+export { EventHandler, SocketNamespace, SyncNamespace, ChatNamespace };
