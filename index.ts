@@ -1,17 +1,15 @@
 /**
 TODO: Scaling and load balancing with redis
 */
-import { createServer } from "http";
-import SocketService from "./src/socketio";
+import ioServer, { httpServer } from "@/socketio";
+import syncNsp from "@/syncNsp";
+import chatNps from "@/chatNps";
 import { instrument } from "@socket.io/admin-ui";
 
 const PORT = process.env.PORT ?? 8080
-const httpServer = createServer();
 
-const socketio = new SocketService();
-socketio.io.attach(httpServer)
-socketio.init()
+syncNsp.listen();
+chatNps.listen();
 
-instrument(socketio.io, { auth: false })
-
+instrument(ioServer, { auth: false })
 httpServer.listen(PORT, () => console.log(`Server listening on ${PORT}`));
