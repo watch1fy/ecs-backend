@@ -3,9 +3,10 @@ import type { Socket } from "socket.io";
 /**
  * @class
  * EventHandler is a class that handles event when added to socket namespace
-*/
+ */
 class EventHandler {
   private eventName: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private handler: (socket: Socket, ...args: any) => void;
 
   /**
@@ -20,6 +21,7 @@ class EventHandler {
    */
   constructor(
     eventName: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     handler: (socket: Socket, ...args: any) => void,
   ) {
     this.eventName = "event:" + eventName;

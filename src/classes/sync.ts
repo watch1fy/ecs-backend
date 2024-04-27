@@ -5,7 +5,7 @@ import SocketNamespace from "./socket";
 /**
  * @class
  * SocketIO 'sync' namespace that handles events sent to this namespace.
-*/
+ */
 class SyncNamespace extends SocketNamespace {
   private _syncNsp: Namespace;
   private static _instance: SyncNamespace | null = null;

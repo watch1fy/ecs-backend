@@ -5,7 +5,7 @@ import SocketNamespace from "./socket";
 /**
  * @class
  * SocketIO 'chat' namespace that handles events sent to this namespace.
-*/
+ */
 class ChatNamespace extends SocketNamespace {
   private _syncNsp: Namespace;
   private static _instance: ChatNamespace | null = null;
