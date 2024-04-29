@@ -1,4 +1,4 @@
-import { Namespace, type Server, type Socket } from "socket.io";
+import { Namespace, type Server } from "socket.io";
 import { SyncEventHandler } from ".";
 import SocketNamespace from "./socket";
 import type { SyncC2SEvents, SyncS2CEvents, SyncS2SEvents, SyncSocket } from "types";
@@ -10,6 +10,7 @@ import type { SyncInPayload } from "types";
  */
 class SyncNamespace extends SocketNamespace {
   private static _instance: SyncNamespace | null = null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private _syncNsp: Namespace<SyncC2SEvents, SyncS2CEvents, SyncS2SEvents, any>;
   private _handlers: SyncEventHandler[];
   private _serverStarted: boolean = false;
@@ -66,7 +67,7 @@ class SyncNamespace extends SocketNamespace {
     this._serverStarted = true;
     this._syncNsp.on('connection', (socket: SyncSocket) => {
       this._handlers.forEach((handler: SyncEventHandler) => {
-        socket.on(handler.event, (payload: SyncInPayload, cb?: Function) => {
+        socket.on(handler.event, (payload: SyncInPayload, cb?: (msg: string) => void) => {
           handler.handle(socket, payload, cb)
         })
       });

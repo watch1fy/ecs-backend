@@ -6,12 +6,12 @@ import type { SyncInPayload, SyncOutPayload } from "./events"
  * @interface
  */
 export interface SyncS2CEvents {
-  'event:play': ({ detail, from }: SyncOutPayload, cb?: Function) => void,
-  'event:pause': ({ detail, from }: SyncOutPayload, cb?: Function) => void,
-  'event:play-fail': ({ detail, from }: SyncOutPayload, cb?: Function) => void,
-  'event:seek': ({ detail, from }: SyncOutPayload, cb?: Function) => void,
-  'event:waiting': ({ detail, from }: SyncOutPayload, cb?: Function) => void,
-  'event:rate-change': ({ detail, from }: SyncOutPayload, cb?: Function) => void
+  'event:play': ({ detail, from }: SyncOutPayload, cb?: (msg: string) => void) => void,
+  'event:pause': ({ detail, from }: SyncOutPayload, cb?: (msg: string) => void) => void,
+  'event:play-fail': ({ detail, from }: SyncOutPayload, cb?: (msg: string) => void) => void,
+  'event:seek': ({ detail, from }: SyncOutPayload, cb?: (msg: string) => void) => void,
+  'event:waiting': ({ detail, from }: SyncOutPayload, cb?: (msg: string) => void) => void,
+  'event:rate-change': ({ detail, from }: SyncOutPayload, cb?: (msg: string) => void) => void
 }
 
 
@@ -20,13 +20,13 @@ export interface SyncS2CEvents {
  * @interface
  */
 export interface SyncC2SEvents {
-  'event:play': ({ detail, toRoom }: SyncInPayload, cb?: Function) => void,
-  'event:pause': ({ detail, toRoom }: SyncInPayload, cb?: Function) => void,
-  'event:play-fail': ({ detail, toRoom }: SyncInPayload, cb?: Function) => void,
-  'event:seek': ({ detail, toRoom }: SyncInPayload, cb?: Function) => void,
-  'event:waiting': ({ detail, toRoom }: SyncInPayload, cb?: Function) => void,
-  'event:rate-change': ({ detail, toRoom }: SyncInPayload, cb?: Function) => void,
-  'event:join-room': (room: string, cb: Function) => void,
+  'event:play': ({ detail, toRoom }: SyncInPayload, cb?: (msg: string) => void) => void,
+  'event:pause': ({ detail, toRoom }: SyncInPayload, cb?: (msg: string) => void) => void,
+  'event:play-fail': ({ detail, toRoom }: SyncInPayload, cb?: (msg: string) => void) => void,
+  'event:seek': ({ detail, toRoom }: SyncInPayload, cb?: (msg: string) => void) => void,
+  'event:waiting': ({ detail, toRoom }: SyncInPayload, cb?: (msg: string) => void) => void,
+  'event:rate-change': ({ detail, toRoom }: SyncInPayload, cb?: (msg: string) => void) => void,
+  'event:join-room': (room: string, cb?: (msg: string) => void) => void,
 }
 
 
@@ -45,4 +45,5 @@ export interface SyncS2SEvents {
  */
 export interface SyncSocketData { }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type SyncSocket = Socket<SyncC2SEvents, SyncS2CEvents, SyncS2SEvents, any>

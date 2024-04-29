@@ -1,4 +1,3 @@
-import type { Socket } from "socket.io";
 import { SyncEventHandler, SyncNamespace } from "./classes";
 import ioServer from "./socketio";
 import type { SyncSocket } from "types";

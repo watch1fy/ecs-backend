@@ -6,7 +6,7 @@ import type { ChatInPayload, ChatOutPayload } from "./events"
  * @interface
  */
 export interface ChatS2CEvents {
-  'event:message': ({ message, from }: ChatOutPayload, cb?: Function) => void,
+  'event:message': ({ message, from }: ChatOutPayload, cb?: (msg: string) => void) => void,
 }
 
 
@@ -15,8 +15,8 @@ export interface ChatS2CEvents {
  * @interface
  */
 export interface ChatC2SEvents {
-  'event:message': ({ message, toRoom }: ChatInPayload, cb?: Function) => void,
-  'event:join-room': (room: string, cb: Function) => void,
+  'event:message': ({ message, toRoom }: ChatInPayload, cb?: (msg: string) => void) => void,
+  'event:join-room': (room: string, cb?: (msg: string) => void) => void,
 }
 
 
@@ -35,4 +35,5 @@ export interface ChatS2SEvents {
  */
 export interface ChatSocketData { }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ChatSocket = Socket<ChatC2SEvents, ChatS2CEvents, ChatS2SEvents, any>

@@ -1,4 +1,4 @@
-import type { Namespace, Server, Socket } from "socket.io";
+import type { Namespace, Server } from "socket.io";
 import type { ChatEventHandler } from "./event";
 import SocketNamespace from "./socket";
 import type { ChatInPayload, ChatC2SEvents, ChatS2CEvents, ChatS2SEvents, ChatSocket } from "types";
@@ -8,6 +8,7 @@ import type { ChatInPayload, ChatC2SEvents, ChatS2CEvents, ChatS2SEvents, ChatSo
  * SocketIO 'chat' namespace that handles events sent to this namespace.
  */
 class ChatNamespace extends SocketNamespace {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private _chatNsp: Namespace<ChatC2SEvents, ChatS2CEvents, ChatS2SEvents, any>;
   private _serverStarted: boolean = false;
   private static _instance: ChatNamespace | null = null;
@@ -64,7 +65,7 @@ class ChatNamespace extends SocketNamespace {
     this._serverStarted = true;
     this._chatNsp.on("connection", (socket: ChatSocket) => {
       this._handlers.forEach((handler: ChatEventHandler) => {
-        socket.on(handler.event, (payload: ChatInPayload, cb?: Function) => {
+        socket.on(handler.event, (payload: ChatInPayload, cb?: (msg: string) => void) => {
           handler.handle(socket, payload, cb)
         })
       });

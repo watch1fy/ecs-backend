@@ -1,4 +1,3 @@
-import type { Socket } from "socket.io";
 import { ChatEventHandler, ChatNamespace } from "./classes";
 import ioServer from "./socketio";
 import type { ChatInPayload, ChatSocket } from "types";
