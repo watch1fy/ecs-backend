@@ -77,12 +77,12 @@ export interface SyncS2SEvents {
  * @todo
  * @interface
  */
-export interface SyncSocketData {}
+export interface SyncSocketData { }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type SyncSocket = Socket<
   SyncC2SEvents,
   SyncS2CEvents,
   SyncS2SEvents,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   any
 >;

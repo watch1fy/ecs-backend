@@ -37,12 +37,12 @@ export interface ChatS2SEvents {
  * @todo
  * @interface
  */
-export interface ChatSocketData {}
+export interface ChatSocketData { }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ChatSocket = Socket<
   ChatC2SEvents,
   ChatS2CEvents,
   ChatS2SEvents,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   any
 >;
