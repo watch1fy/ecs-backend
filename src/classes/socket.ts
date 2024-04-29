@@ -1,4 +1,4 @@
-import type { EventHandler } from ".";
+import type { ChatEventHandler, SyncEventHandler } from ".";
 
 /**
  * @class
@@ -8,17 +8,19 @@ import type { EventHandler } from ".";
  */
 abstract class SocketNamespace {
   /**
+   * Call this method only after adding all the event listners
+   * Abstract method that will be implemented by the child class
    * @method
    * @abstract
-   * Abstract method that will be implemented by the child class
    * @param eventHander - EventHandler Object
    */
-  abstract addEventHandler(eventHander: EventHandler): void;
+  abstract addEventHandler(eventHander: ChatEventHandler | SyncEventHandler): void;
 
   /**
+   * Call this method only after adding all the event listners
+   * Abstract method that will be implemented by the child class
    * @method
    * @abstract
-   * Abstract method that will be implemented by the child class
    */
   abstract listen(): void;
 }

@@ -9,7 +9,7 @@ import { instrument } from "@socket.io/admin-ui";
 const PORT = process.env.PORT ?? 8080;
 
 syncNsp.listen();
-chatNps.listen();
+// chatNps.listen();
 
 instrument(ioServer, { auth: false });
 httpServer.listen(PORT, () => console.log(`Server listening on ${PORT}`));

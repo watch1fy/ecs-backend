@@ -1,5 +1,5 @@
 import type { Namespace, Server, Socket } from "socket.io";
-import type EventHandler from "./event";
+import type { ChatEventHandler } from "./event";
 import SocketNamespace from "./socket";
 
 /**
@@ -9,7 +9,7 @@ import SocketNamespace from "./socket";
 class ChatNamespace extends SocketNamespace {
   private _syncNsp: Namespace;
   private static _instance: ChatNamespace | null = null;
-  private _handlers: EventHandler[];
+  private _handlers: ChatEventHandler[];
   private CONNECTION: string = "connection" as const;
 
   /**
@@ -48,7 +48,7 @@ class ChatNamespace extends SocketNamespace {
    * An EventHandler instance that specifies an event and
    * a function that handles that event
    */
-  public addEventHandler(eventHander: EventHandler) {
+  public addEventHandler(eventHander: ChatEventHandler) {
     this._handlers.push(eventHander);
   }
 
@@ -59,7 +59,7 @@ class ChatNamespace extends SocketNamespace {
    */
   public listen() {
     this._syncNsp.on(this.CONNECTION, (socket: Socket) => {
-      this._handlers.forEach((handler: EventHandler) => {
+      this._handlers.forEach((handler: ChatEventHandler) => {
         handler.handle(socket);
       });
     });

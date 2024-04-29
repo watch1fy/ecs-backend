@@ -1,16 +1,18 @@
-import type { Namespace, Server, Socket } from "socket.io";
-import type { EventHandler } from ".";
+import { Namespace, type Server, type Socket } from "socket.io";
+import { SyncEventHandler } from ".";
 import SocketNamespace from "./socket";
+import type { SyncC2SEvents, SyncS2CEvents, SyncS2SEvents } from "types";
+import type { SyncInPayload } from "types";
 
 /**
  * @class
  * SocketIO 'sync' namespace that handles events sent to this namespace.
  */
 class SyncNamespace extends SocketNamespace {
-  private _syncNsp: Namespace;
   private static _instance: SyncNamespace | null = null;
-  private _handlers: EventHandler[];
-  private CONNECTION: string = "connection" as const;
+  private _syncNsp: Namespace<SyncC2SEvents, SyncS2CEvents, SyncS2SEvents, any>;
+  private _handlers: SyncEventHandler[];
+  private _serverStarted: boolean = false;
 
   /**
    * Constructor to sync namespace
@@ -29,7 +31,7 @@ class SyncNamespace extends SocketNamespace {
     }
     SyncNamespace._instance = this;
     this._syncNsp = io.of("/sync");
-    this._handlers = [];
+    this._handlers = []
   }
 
   /**
@@ -48,8 +50,11 @@ class SyncNamespace extends SocketNamespace {
    * An EventHandler instance that specifies an event and
    * a function that handles that event
    */
-  public addEventHandler(eventHander: EventHandler) {
-    this._handlers.push(eventHander);
+  public addEventHandler(eventHandler: SyncEventHandler) {
+    if (this._serverStarted) {
+      throw new Error('Cannot add events after ')
+    }
+    this._handlers.push(eventHandler);
   }
 
   /**
@@ -58,9 +63,12 @@ class SyncNamespace extends SocketNamespace {
    * @method
    */
   public listen() {
-    this._syncNsp.on(this.CONNECTION, (socket: Socket) => {
-      this._handlers.forEach((handler: EventHandler) => {
-        handler.handle(socket);
+    this._serverStarted = true;
+    this._syncNsp.on('connection', (socket: Socket) => {
+      this._handlers.forEach((handler: SyncEventHandler) => {
+        socket.on(handler.event, (payload: SyncInPayload, cb?: Function) => {
+          handler.handle(socket, payload, cb)
+        })
       });
     });
   }
