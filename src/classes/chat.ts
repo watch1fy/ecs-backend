@@ -1,7 +1,13 @@
 import type { Namespace, Server } from "socket.io";
 import type { ChatEventHandler } from "./event";
 import SocketNamespace from "./socket";
-import type { ChatInPayload, ChatC2SEvents, ChatS2CEvents, ChatS2SEvents, ChatSocket } from "types";
+import type {
+  ChatInPayload,
+  ChatC2SEvents,
+  ChatS2CEvents,
+  ChatS2SEvents,
+  ChatSocket,
+} from "types";
 
 /**
  * @class
@@ -52,7 +58,9 @@ class ChatNamespace extends SocketNamespace {
    */
   public addEventHandler(eventHander: ChatEventHandler) {
     if (this._serverStarted)
-      throw new Error('Events cannot be added after the server has started to listen for them');
+      throw new Error(
+        "Events cannot be added after the server has started to listen for them",
+      );
     this._handlers.push(eventHander);
   }
 
@@ -65,9 +73,12 @@ class ChatNamespace extends SocketNamespace {
     this._serverStarted = true;
     this._chatNsp.on("connection", (socket: ChatSocket) => {
       this._handlers.forEach((handler: ChatEventHandler) => {
-        socket.on(handler.event, (payload: ChatInPayload, cb?: (msg: string) => void) => {
-          handler.handle(socket, payload, cb)
-        })
+        socket.on(
+          handler.event,
+          (payload: ChatInPayload, cb?: (msg: string) => void) => {
+            handler.handle(socket, payload, cb);
+          },
+        );
       });
     });
   }

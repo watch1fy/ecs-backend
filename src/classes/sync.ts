@@ -1,7 +1,12 @@
 import { Namespace, type Server } from "socket.io";
 import { SyncEventHandler } from ".";
 import SocketNamespace from "./socket";
-import type { SyncC2SEvents, SyncS2CEvents, SyncS2SEvents, SyncSocket } from "types";
+import type {
+  SyncC2SEvents,
+  SyncS2CEvents,
+  SyncS2SEvents,
+  SyncSocket,
+} from "types";
 import type { SyncInPayload } from "types";
 
 /**
@@ -32,7 +37,7 @@ class SyncNamespace extends SocketNamespace {
     }
     SyncNamespace._instance = this;
     this._syncNsp = io.of("/sync");
-    this._handlers = []
+    this._handlers = [];
   }
 
   /**
@@ -53,7 +58,9 @@ class SyncNamespace extends SocketNamespace {
    */
   public addEventHandler(eventHandler: SyncEventHandler) {
     if (this._serverStarted) {
-      throw new Error('Events cannot be added after the server has started to listen for them')
+      throw new Error(
+        "Events cannot be added after the server has started to listen for them",
+      );
     }
     this._handlers.push(eventHandler);
   }
@@ -65,11 +72,14 @@ class SyncNamespace extends SocketNamespace {
    */
   public listen() {
     this._serverStarted = true;
-    this._syncNsp.on('connection', (socket: SyncSocket) => {
+    this._syncNsp.on("connection", (socket: SyncSocket) => {
       this._handlers.forEach((handler: SyncEventHandler) => {
-        socket.on(handler.event, (payload: SyncInPayload, cb?: (msg: string) => void) => {
-          handler.handle(socket, payload, cb)
-        })
+        socket.on(
+          handler.event,
+          (payload: SyncInPayload, cb?: (msg: string) => void) => {
+            handler.handle(socket, payload, cb);
+          },
+        );
       });
     });
   }

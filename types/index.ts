@@ -3,7 +3,7 @@ import type {
   SyncS2CEvents,
   SyncS2SEvents,
   SyncSocketData,
-  SyncSocket
+  SyncSocket,
 } from "./syncNps";
 
 import type {
@@ -12,7 +12,7 @@ import type {
   ChatInPayload,
   ChatOutPayload,
   SyncInPayload,
-  SyncOutPayload
+  SyncOutPayload,
 } from "./events";
 
 import type {
@@ -20,8 +20,8 @@ import type {
   ChatS2CEvents,
   ChatS2SEvents,
   ChatSocketData,
-  ChatSocket
-} from './chatNsp'
+  ChatSocket,
+} from "./chatNsp";
 
 export type {
   SyncC2SEvents,
@@ -39,5 +39,5 @@ export type {
   ChatS2SEvents,
   ChatSocketData,
   SyncSocket,
-  ChatSocket
+  ChatSocket,
 };

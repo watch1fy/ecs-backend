@@ -9,7 +9,11 @@ import type { ChatInPayload } from "types/events";
  */
 export class ChatEventHandler {
   private eventName: ChatEventNameType;
-  private handler: (socket: ChatSocket, payload: ChatInPayload, cb?: (msg: string) => void) => void;
+  private handler: (
+    socket: ChatSocket,
+    payload: ChatInPayload,
+    cb?: (msg: string) => void,
+  ) => void;
 
   /**
    * Constructor to chat namespace
@@ -22,7 +26,11 @@ export class ChatEventHandler {
    */
   constructor(
     eventName: ChatEventNameType,
-    handler: (socket: ChatSocket, payload: ChatInPayload, cb?: (msg: string) => void) => void,
+    handler: (
+      socket: ChatSocket,
+      payload: ChatInPayload,
+      cb?: (msg: string) => void,
+    ) => void,
   ) {
     this.eventName = eventName;
     this.handler = handler;
@@ -33,16 +41,20 @@ export class ChatEventHandler {
    * @param socket
    * A Socket obejct that is used to listen and execute the handler
    */
-  public handle(socket: ChatSocket, payload: ChatInPayload, cb?: (msg: string) => void) {
+  public handle(
+    socket: ChatSocket,
+    payload: ChatInPayload,
+    cb?: (msg: string) => void,
+  ) {
     this.handler(socket, payload, cb);
   }
 
   get event() {
-    return this.eventName
+    return this.eventName;
   }
 
   get eventHandler() {
-    return this.handler
+    return this.handler;
   }
 }
 
@@ -52,7 +64,11 @@ export class ChatEventHandler {
  */
 export class SyncEventHandler {
   private eventName: SyncEventNameType;
-  private handler: (socket: SyncSocket, payload: SyncInPayload, cb: ((msg: string) => void) | undefined) => void;
+  private handler: (
+    socket: SyncSocket,
+    payload: SyncInPayload,
+    cb: ((msg: string) => void) | undefined,
+  ) => void;
 
   /**
    * Constructor to chat namespace
@@ -65,7 +81,11 @@ export class SyncEventHandler {
    */
   constructor(
     eventName: SyncEventNameType,
-    handler: (socket: SyncSocket, payload: SyncInPayload, cb: ((msg: string) => void) | undefined) => void,
+    handler: (
+      socket: SyncSocket,
+      payload: SyncInPayload,
+      cb: ((msg: string) => void) | undefined,
+    ) => void,
   ) {
     this.eventName = eventName;
     this.handler = handler;
@@ -76,15 +96,19 @@ export class SyncEventHandler {
    * @param socket
    * A Socket obejct that is used to listen and execute the handler
    */
-  public handle(socket: SyncSocket, payload: SyncInPayload, cb?: (msg: string) => void) {
+  public handle(
+    socket: SyncSocket,
+    payload: SyncInPayload,
+    cb?: (msg: string) => void,
+  ) {
     this.handler(socket, payload, cb);
   }
 
   get event() {
-    return this.eventName
+    return this.eventName;
   }
 
   get eventHandler() {
-    return this.handler
+    return this.handler;
   }
 }

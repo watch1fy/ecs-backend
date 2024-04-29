@@ -14,7 +14,9 @@ abstract class SocketNamespace {
    * @abstract
    * @param eventHander - EventHandler Object
    */
-  abstract addEventHandler(eventHander: ChatEventHandler | SyncEventHandler): void;
+  abstract addEventHandler(
+    eventHander: ChatEventHandler | SyncEventHandler,
+  ): void;
 
   /**
    * Call this method only after adding all the event listners
