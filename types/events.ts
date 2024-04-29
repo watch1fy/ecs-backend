@@ -1,5 +1,3 @@
-import type { Socket } from "socket.io"
-
 export type ChatEventNameType = 'event:message'
   | 'event:join-room'
 
@@ -26,5 +24,16 @@ export interface SyncOutPayload {
     currentTime: number,
     playbackRate: number
   },
+  from: string
+}
+
+export type ChatInPayload = {
+  room?: string,
+  message: 'string',
+  toRoom: string
+}
+
+export interface ChatOutPayload {
+  message: string,
   from: string
 }

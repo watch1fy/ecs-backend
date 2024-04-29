@@ -1,3 +1,4 @@
+import type { Socket } from "socket.io"
 import type { SyncInPayload, SyncOutPayload } from "./events"
 
 /**
@@ -10,6 +11,7 @@ export interface SyncS2CEvents {
   'event:play-fail': ({ detail, from }: SyncOutPayload, cb?: Function) => void,
   'event:seek': ({ detail, from }: SyncOutPayload, cb?: Function) => void,
   'event:waiting': ({ detail, from }: SyncOutPayload, cb?: Function) => void,
+  'event:rate-change': ({ detail, from }: SyncOutPayload, cb?: Function) => void
 }
 
 
@@ -42,3 +44,5 @@ export interface SyncS2SEvents {
  * @interface
  */
 export interface SyncSocketData { }
+
+export type SyncSocket = Socket<SyncC2SEvents, SyncS2CEvents, SyncS2SEvents, any>

@@ -1,16 +1,17 @@
 import type { Namespace, Server, Socket } from "socket.io";
 import type { ChatEventHandler } from "./event";
 import SocketNamespace from "./socket";
+import type { ChatInPayload, ChatC2SEvents, ChatS2CEvents, ChatS2SEvents, ChatSocket } from "types";
 
 /**
  * @class
  * SocketIO 'chat' namespace that handles events sent to this namespace.
  */
 class ChatNamespace extends SocketNamespace {
-  private _syncNsp: Namespace;
+  private _chatNsp: Namespace<ChatC2SEvents, ChatS2CEvents, ChatS2SEvents, any>;
+  private _serverStarted: boolean = false;
   private static _instance: ChatNamespace | null = null;
   private _handlers: ChatEventHandler[];
-  private CONNECTION: string = "connection" as const;
 
   /**
    * Constructor to chat namespace
@@ -28,7 +29,7 @@ class ChatNamespace extends SocketNamespace {
       throw new Error("ChatNamespace can only be instantiated once.");
     }
     ChatNamespace._instance = this;
-    this._syncNsp = io.of("/sync");
+    this._chatNsp = io.of("/chat");
     this._handlers = [];
   }
 
@@ -49,6 +50,8 @@ class ChatNamespace extends SocketNamespace {
    * a function that handles that event
    */
   public addEventHandler(eventHander: ChatEventHandler) {
+    if (this._serverStarted)
+      throw new Error('Events cannot be added after the server has started to listen for them');
     this._handlers.push(eventHander);
   }
 
@@ -58,9 +61,12 @@ class ChatNamespace extends SocketNamespace {
    * @method
    */
   public listen() {
-    this._syncNsp.on(this.CONNECTION, (socket: Socket) => {
+    this._serverStarted = true;
+    this._chatNsp.on("connection", (socket: ChatSocket) => {
       this._handlers.forEach((handler: ChatEventHandler) => {
-        handler.handle(socket);
+        socket.on(handler.event, (payload: ChatInPayload, cb?: Function) => {
+          handler.handle(socket, payload, cb)
+        })
       });
     });
   }
