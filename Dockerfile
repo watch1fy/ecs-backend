@@ -1,3 +1,6 @@
+# This Dockerfile uses node:tls image with bun installed as dependency to install and cache node_module
+# and then uses oven/bun:latest as runtime to execute ts files in bun runtime
+
 # use the official node-lts image as base
 # this is to avoid node-gyp error from oven/bun image
 FROM node:lts as base
@@ -24,7 +27,8 @@ COPY --from=install /temp/dev/node_modules node_modules
 COPY . .
 
 # copy production dependencies and source code into final image
-FROM oven/bun:latest AS release
+# using bun as runtime
+FROM oven/bun:latest AS runtime
 ENV FRONT_END_DOMAIN=http://localhost:3000
 COPY --from=install /temp/prod/node_modules node_modules
 COPY --from=prerelease /usr/src/app .

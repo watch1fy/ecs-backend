@@ -1,6 +1,3 @@
-/**
-@todo Scaling and load balancing with redis
-*/
 import ioServer, { httpServer } from "@/socketio";
 import syncNsp from "@/syncNsp";
 import chatNps from "@/chatNps";
