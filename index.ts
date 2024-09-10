@@ -3,7 +3,7 @@ import syncNsp from "@/syncNsp";
 import chatNps from "@/chatNps";
 import { instrument } from "@socket.io/admin-ui";
 
-const PORT = process.env.PORT ?? 8080;
+const PORT = process.env.NODE_ENV === 'production' ? 80 : (process.env.PORT ?? 8080);
 
 syncNsp.listen();
 chatNps.listen();

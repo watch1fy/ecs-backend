@@ -5,7 +5,7 @@
 # this is to avoid node-gyp error from oven/bun image
 FROM node:lts as base
 WORKDIR /usr/src/app
-RUN npm i -g bun
+RUN npm i -g bun@1.1.3
 
 # install dependencies into temp directory
 # this will cache them and speed up future builds
@@ -26,14 +26,23 @@ FROM base AS prerelease
 COPY --from=install /temp/dev/node_modules node_modules
 COPY . .
 
-# copy production dependencies and source code into final image
 # using bun as runtime
-FROM oven/bun:latest AS runtime
-ENV FRONT_END_DOMAIN=http://localhost:3000
+FROM oven/bun:1.1.3 AS runtime
+ENV NODE_ENV production
+
+# get the args
+ARG FRONT_END_DOMAIN http://localhost:3000
+ARG REDIS_URL
+
+# setting env from ARG
+ENV FRONT_END_DOMAIN ${FRONT_END_DOMAIN}
+ENV REDIS_URL ${REDIS_URL}
+
+# copy production dependencies and source code into final image
 COPY --from=install /temp/prod/node_modules node_modules
 COPY --from=prerelease /usr/src/app .
 
 # run the app
 USER bun
-EXPOSE 8080
+EXPOSE 80
 ENTRYPOINT [ "bun", "run", "index.ts" ]

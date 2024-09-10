@@ -1,7 +1,6 @@
 name: ECS CI/CD
 
 on:
-  # NOTE: Empty push tag to temporarily remove deplyment
   push:
     branches: ["main"]
 
